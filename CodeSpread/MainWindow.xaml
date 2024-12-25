@@ -11,6 +11,6 @@
         WindowStyle="None"
         Background="Transparent">
     <Grid>
-        <views:StartupView/>
+        <views:DecompileView/>
     </Grid>
 </Window>

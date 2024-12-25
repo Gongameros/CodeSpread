@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CodeSpread.Base;
+using CodeSpread.Decompiler;
+using CodeSpread.Decompiler.Models;
 using CodeSpread.Services;
 using Microsoft.Win32;
 
@@ -17,6 +19,7 @@ public class StartupViewModel
         _recentFileStream = new RecentFileStream(maxRecentFiles: 20);
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
+
     }
 
     public void AddFile(string filePath)
@@ -48,6 +51,10 @@ public class StartupViewModel
             {
                 // Save the file path into RecentFileStream
                 _recentFileStream.AddRecentFile(filePath);
+
+                // Decompiling the file 
+                AssemblyInformation assemblyInformation = FileDecompiler.DecompileAssembly(filePath);
+                
             }
             catch (Exception ex)
             {
