@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using CodeSpread.Base;
 using CodeSpread.Decompiler;
@@ -13,13 +14,14 @@ public class StartupViewModel
     private readonly RecentFileStream _recentFileStream;
     public ObservableCollection<string> RecentFiles { get; }
     public ICommand OpenFileCommand { get; }
+    public ICommand OpenRecentFileCommand { get; }
 
     public StartupViewModel()
     {
         _recentFileStream = new RecentFileStream(maxRecentFiles: 20);
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
-
+        OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
     }
 
     public void AddFile(string filePath)
@@ -54,13 +56,35 @@ public class StartupViewModel
 
                 // Decompiling the file 
                 AssemblyInformation assemblyInformation = FileDecompiler.DecompileAssembly(filePath);
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                mainWindow.OnFileSelected(assemblyInformation);
                 
             }
             catch (Exception ex)
             {
-                // Handle any exceptions (e.g., logging)
-                Console.WriteLine($"Failed to add file to recent list: {ex.Message}");
+                MessageBox.Show($"Failed to add file to recent list: {ex.Message}",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
             }
+        }
+    }
+
+    private void OpenRecentFile(string filePath)
+    {
+        try
+        {
+            // Decompiling the recent file
+            AssemblyInformation assemblyInformation = FileDecompiler.DecompileAssembly(filePath);
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow.OnFileSelected(assemblyInformation);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to open recent file: {ex.Message}",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
         }
     }
 }

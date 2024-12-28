@@ -3,6 +3,8 @@ using ICSharpCode.Decompiler.CSharp;
 using ICSharpCode.Decompiler.TypeSystem;
 using ICSharpCode.Decompiler;
 using CodeSpread.Decompiler.Models;
+using System;
+using ICSharpCode.Decompiler.CSharp.Syntax;
 
 namespace CodeSpread.Decompiler;
 
@@ -112,6 +114,7 @@ public class FileDecompiler
         {
             // Initialize decompiler
             var decompiler = new CSharpDecompiler(assemblyPath, new DecompilerSettings());
+            
 
             // Decompile the full type to C#
             return decompiler.DecompileTypeAsString(new FullTypeName(type.FullName));
@@ -121,4 +124,50 @@ public class FileDecompiler
             return $"Error decompiling type {type.FullName}: {ex.Message}";
         }
     }
+
+    public static void DecompileIntoIL(string assemblyPath)
+    {
+
+        // Read the assembly
+        var assembly = AssemblyDefinition.ReadAssembly(assemblyPath);
+
+        foreach (var type in assembly.MainModule.Types)
+        {
+            // Create a file for the type
+            string sanitizedTypeName = SanitizeFileName(type.FullName);
+            string typeFilePath = Path.Combine("D:\\Projects\\CodeSpreadProject\\TestIL", $"{sanitizedTypeName}.il");
+            using (var writer = new StreamWriter(typeFilePath))
+            {
+                // Write the type header
+                writer.WriteLine($"Type: {type.FullName}\n");
+
+                // Loop through all methods in the type and extract IL
+                foreach (var method in type.Methods)
+                {
+                    writer.WriteLine($"\nMethod: {method.Name}");
+
+                    // Write the IL code for the method
+                    if (method.Body != null)
+                    {
+                        foreach (var instruction in method.Body.Instructions)
+                        {
+                            writer.WriteLine(instruction.ToString());
+                        }
+                    }
+                    else
+                    {
+                        writer.WriteLine("No IL code available for this method.");
+                    }
+                }
+            }
+        }
+
+    }
+    static string SanitizeFileName(string name)
+    {
+        // Characters that are not allowed in filenames
+        char[] invalidChars = Path.GetInvalidFileNameChars();
+        return string.Concat(name.Select(c => invalidChars.Contains(c) ? '_' : c));
+    }
+
 }

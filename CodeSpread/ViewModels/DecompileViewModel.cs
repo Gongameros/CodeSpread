@@ -1,16 +1,14 @@
 ﻿using System.Collections.ObjectModel;
-using CodeSpread.Decompiler;
 using CodeSpread.Decompiler.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.IO;
 
 namespace CodeSpread.ViewModels;
 
 public class DecompileViewModel : INotifyPropertyChanged
 {
     private string _selectedCode;
-
+    private readonly Dictionary<string, int> _codeMap = new();
     public ObservableCollection<AssemblyModule> AssemblyModules { get; set; } = new ObservableCollection<AssemblyModule>();
 
     public string SelectedCode
@@ -23,35 +21,31 @@ public class DecompileViewModel : INotifyPropertyChanged
         }
     }
 
-    public DecompileViewModel()
+    public DecompileViewModel(AssemblyInformation decompiledAssembly)
     {
-        // Load the assembly and populate the tree
-        var assemblyPath = "D:\\Projects\\CodeSpreadProject\\CodeSpread.Decompiler\\bin\\Debug\\net8.0\\CodeSpread.Decompiler.dll";
-        if (!Path.Exists(assemblyPath))
-        {
-            throw new FileNotFoundException($"Assembly path is invalid.\n{assemblyPath}");
-        }
-        var decompiledAssembly = FileDecompiler.DecompileAssembly(assemblyPath);
-
         foreach (var module in decompiledAssembly.AssemblyModules)
         {
             AssemblyModules.Add(module);
-        }
-    }
 
-    public void OnSelectedItemChanged(object selectedItem)
-    {
-        switch (selectedItem)
-        {
-            case DecompiledType type:
-                SelectedCode = type.DecompiledCode;
-                break;
-            case NestedType nested:
-                SelectedCode = $"Namespace: {nested.Namespace}\n\nProperties:\n{string.Join("\n", nested.Properties)}\n\nMethods:\n{string.Join("\n", nested.Methods)}";
-                break;
-            default:
-                SelectedCode = string.Empty;
-                break;
+            // For future 
+
+            //foreach (var type in module.DecompiledTypes)
+            //{
+            //    // Map properties and methods to their positions
+            //    int currentLine = 0;
+            //    foreach (var line in type.DecompiledCode.Split('\n'))
+            //    {
+            //        currentLine++;
+            //        if (type.Properties.Contains(line.Trim()))
+            //        {
+            //            _codeMap[line.Trim()] = currentLine;
+            //        }
+            //        if (type.Methods.Contains(line.Trim()))
+            //        {
+            //            _codeMap[line.Trim()] = currentLine;
+            //        }
+            //    }
+            //}
         }
     }
 

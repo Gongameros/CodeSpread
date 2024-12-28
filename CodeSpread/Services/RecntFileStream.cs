@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using System.Windows;
 namespace CodeSpread.Services;
 
 public class RecentFileStream
@@ -86,7 +87,7 @@ public class RecentFileStream
         catch (Exception ex)
         {
             // Handle exceptions such as permission issues
-            Console.WriteLine($"Failed to save recent files: {ex.Message}");
+            MessageBox.Show($"Failed to save recent files: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

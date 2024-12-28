@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSpread", "CodeSpread.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSpread.Decompiler", "..\CodeSpread.Decompiler\CodeSpread.Decompiler.csproj", "{7E15CFDD-4349-4B18-A54B-8BCEB70F669E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDecompiler", "..\TestDecompiler\TestDecompiler.csproj", "{97134FFD-0BEC-4E60-95DA-0AE19F439297}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDecompiler", "..\TestDecompiler\TestDecompiler.csproj", "{8319192A-7E8B-4AE9-A7E6-B5D14358C20A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{7E15CFDD-4349-4B18-A54B-8BCEB70F669E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E15CFDD-4349-4B18-A54B-8BCEB70F669E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E15CFDD-4349-4B18-A54B-8BCEB70F669E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97134FFD-0BEC-4E60-95DA-0AE19F439297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97134FFD-0BEC-4E60-95DA-0AE19F439297}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97134FFD-0BEC-4E60-95DA-0AE19F439297}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97134FFD-0BEC-4E60-95DA-0AE19F439297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8319192A-7E8B-4AE9-A7E6-B5D14358C20A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8319192A-7E8B-4AE9-A7E6-B5D14358C20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8319192A-7E8B-4AE9-A7E6-B5D14358C20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8319192A-7E8B-4AE9-A7E6-B5D14358C20A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

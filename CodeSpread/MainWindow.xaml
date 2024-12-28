@@ -5,12 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSpread"
         xmlns:views="clr-namespace:CodeSpread.Views"
+        xmlns:controls="clr-namespace:CodeSpread.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent">
     <Grid>
-        <views:DecompileView/>
+        <Border x:Name="BorderMainWindow" CornerRadius="8" Background="#222222" BorderBrush="#444444" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!-- Title Bar -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Main View -->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <controls:CustomTitleBar Grid.Row="0"/>
+                <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>

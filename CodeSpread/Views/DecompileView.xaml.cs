@@ -12,17 +12,12 @@ public partial class DecompileView : UserControl
 {
     private readonly DecompileViewModel _viewModel;
 
-    public DecompileView()
+    public DecompileView(AssemblyInformation assemblyInformation)
     {
         InitializeComponent();
 
-        _viewModel = new DecompileViewModel();
+        _viewModel = new DecompileViewModel(assemblyInformation);
         DataContext = _viewModel;
-    }
-
-    private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-    {
-        _viewModel.OnSelectedItemChanged(e.NewValue);
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -32,7 +27,7 @@ public partial class DecompileView : UserControl
             var moduleTreeItem = new TreeViewItem
             {
                 Header = module.ModuleName,
-                Tag = module.ModuleName
+                Tag = module
             };
 
             moduleTreeItem.Expanded += ModuleExpanded;
@@ -42,8 +37,10 @@ public partial class DecompileView : UserControl
                 var typeTreeItem = new TreeViewItem
                 {
                     Header = type.Name,
-                    Tag = type.Name
+                    Tag = type
                 };
+
+                typeTreeItem.Selected += TreeItemSelectedType;
 
                 foreach (var property in type.Properties)
                 {
@@ -71,8 +68,9 @@ public partial class DecompileView : UserControl
                     var nestedTypeTreeItem = new TreeViewItem
                     {
                         Header = nestedType.Name,
-                        Tag = nestedType.Name
+                        Tag = nestedType
                     };
+
 
                     typeTreeItem.Items.Add(nestedTypeTreeItem);
                 }
@@ -81,7 +79,14 @@ public partial class DecompileView : UserControl
             }
         }
 
+    }
 
+    private void TreeItemSelectedType(object sender, RoutedEventArgs e)
+    {
+        if (sender is TreeViewItem treeViewItem && treeViewItem.Tag is DecompiledType decompiledType)
+        {
+            _viewModel.SelectedCode = decompiledType.DecompiledCode;
+        }
     }
 
     private void ModuleExpanded(object sender, RoutedEventArgs e)
