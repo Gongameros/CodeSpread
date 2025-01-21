@@ -14,6 +14,33 @@ namespace CodeSpread.UserControls
             InitializeComponent();
         }
 
+        
+        public string IconSource 
+        {
+            get { return (string)GetValue(IconSourceProperty); }
+            set { SetValue(IconSourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty IconSourceProperty =
+            DependencyProperty.Register(
+                nameof(IconSource),
+                typeof(string),
+                typeof(MainMenuButton),
+                new PropertyMetadata("Default Text"));
+
+        public string SubText 
+        {
+            get { return (string)GetValue(SubTextProperty); }
+            set { SetValue(SubTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty SubTextProperty =
+            DependencyProperty.Register(
+                nameof(SubText),
+                typeof(string),
+                typeof(MainMenuButton),
+                new PropertyMetadata("Default Text"));
+
         // DependencyProperty for the button text
         public string ButtonText
         {

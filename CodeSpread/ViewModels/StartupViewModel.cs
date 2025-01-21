@@ -5,23 +5,30 @@ using CodeSpread.Base;
 using CodeSpread.Decompiler;
 using CodeSpread.Decompiler.Models;
 using CodeSpread.Services;
+using CodeSpread.Views;
 using Microsoft.Win32;
 
 namespace CodeSpread.ViewModels;
 
 public class StartupViewModel
 {
+    private readonly AboutView _aboutView;
     private readonly RecentFileStream _recentFileStream;
     public ObservableCollection<string> RecentFiles { get; }
     public ICommand OpenFileCommand { get; }
+    public ICommand AboutCommand { get; }
     public ICommand OpenRecentFileCommand { get; }
 
     public StartupViewModel()
     {
-        _recentFileStream = new RecentFileStream(maxRecentFiles: 20);
+        _aboutView = new AboutView();
+        _recentFileStream = new RecentFileStream();
+
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
         OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
+        AboutCommand = new RelayCommand(OpenAboutView);
+
     }
 
     public void AddFile(string filePath)
@@ -82,6 +89,22 @@ public class StartupViewModel
         catch (Exception ex)
         {
             MessageBox.Show($"Failed to open recent file: {ex.Message}",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+        }
+    }
+
+    private void OpenAboutView()
+    {
+        try
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow.CurrentView = _aboutView;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to open about view: {ex.Message}",
                             "Error",
                             MessageBoxButton.OK,
                             MessageBoxImage.Error);

@@ -9,10 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\about.png" />
+    <None Remove="Assets\file-open.png" />
+    <None Remove="Assets\return-back-icon.png" />
+    <None Remove="Assets\settings.png" />
     <None Remove="Fonts\Rye.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\about.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\file-open.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\return-back-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\Rye.ttf" />
   </ItemGroup>
 
@@ -22,6 +38,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />

@@ -17,13 +17,21 @@
                 <Grid.RowDefinitions>
                     <!-- Title Bar -->
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <!-- Main View -->
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <controls:CustomTitleBar Grid.Row="0"/>
-                <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+                <controls:NavbarMenu Grid.Row="1"/>
+                <ContentControl Grid.Row="2" Content="{Binding CurrentView}" />
             </Grid>
         </Border>
+
+        <!-- Resize Borders -->
+        <Border x:Name="ResizeBorderLeft" Background="Transparent" Width="5" HorizontalAlignment="Left" Cursor="SizeWE" MouseMove="Resize_MouseMove" MouseDown="Resize_MouseDown" MouseUp="Resize_MouseUp" />
+        <Border x:Name="ResizeBorderRight" Background="Transparent" Width="5" HorizontalAlignment="Right" Cursor="SizeWE" MouseMove="Resize_MouseMove" MouseDown="Resize_MouseDown" MouseUp="Resize_MouseUp" />
+        <Border x:Name="ResizeBorderTop" Background="Transparent" Height="5" VerticalAlignment="Top" Cursor="SizeNS" MouseMove="Resize_MouseMove" MouseDown="Resize_MouseDown" MouseUp="Resize_MouseUp" />
+        <Border x:Name="ResizeBorderBottom" Background="Transparent" Height="5" VerticalAlignment="Bottom" Cursor="SizeNS" MouseMove="Resize_MouseMove" MouseDown="Resize_MouseDown" MouseUp="Resize_MouseUp" />
     </Grid>
 </Window>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CodeSpread.UserControls.MainMenuButton"
+﻿<!--<UserControl x:Class="CodeSpread.UserControls.MainMenuButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,11 +9,49 @@
                 CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Background="Transparent"
                 BorderThickness="0" >
-            <Border Background="#444444" CornerRadius="5" BorderBrush="#666666" BorderThickness="1" Padding="7" Margin="5"
+            <Border Background="#333333" CornerRadius="0" BorderBrush="#222222" BorderThickness="0" Padding="7" 
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="200" Height="50">
                 <TextBlock Text="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            </Border>
+        </Button>
+    </Grid>
+</UserControl>-->
+
+<UserControl x:Class="CodeSpread.UserControls.MainMenuButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+    <Grid>
+        <Button Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Background="Transparent"
+                BorderThickness="0"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border Background="#333333" 
+                    BorderBrush="#222222" 
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Width="300" 
+                    Height="70">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                    <!-- Image on the left -->
+                    <Image Source="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           Width="35" Height="35" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <!-- Main text (title) -->
+                        <TextBlock Text="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="0,0,0,5"/>
+
+                        <!-- Subtext (description) -->
+                        <TextBlock Text="{Binding SubText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="0,0,0,5"/>
+                    </StackPanel>
+                </StackPanel>
             </Border>
         </Button>
     </Grid>
 </UserControl>
+

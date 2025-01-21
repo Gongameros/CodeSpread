@@ -1,17 +1,15 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
 using System.Windows;
+using CodeSpread.Base;
+
 namespace CodeSpread.Services;
 
 public class RecentFileStream
 {
     private const string _filePath = "RecentFiles.json";
-    private readonly int _maxRecentFiles;
-    private readonly ILogger<RecentFileStream> _logger;
-    public RecentFileStream(int maxRecentFiles = 10)
+    public RecentFileStream()
     {
-        _maxRecentFiles = maxRecentFiles;
 
         try
         {
@@ -42,12 +40,6 @@ public class RecentFileStream
 
         // Add the file to the top of the list
         recentFiles.Insert(0, filePath);
-
-        const int maxRecentFiles = 10;
-        if (recentFiles.Count > maxRecentFiles)
-        {
-            recentFiles = recentFiles.Take(maxRecentFiles).ToList();
-        }
 
         SaveRecentFiles(recentFiles);
     }
