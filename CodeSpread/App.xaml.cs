@@ -4,6 +4,7 @@ using CodeSpread.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 using CodeSpread.Views;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace CodeSpread;
 
@@ -12,9 +13,16 @@ namespace CodeSpread;
 /// </summary>
 public partial class App : Application
 {
+    private readonly IHost _host;
+
     public App()
     {
-
+        _host = Host.CreateDefaultBuilder()
+            .ConfigureServices((context, services) =>
+            {
+                services.AddCodeSpread();
+            })
+            .Build();
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -22,6 +30,9 @@ public partial class App : Application
         try
         {
             base.OnStartup(e);
+
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            mainWindow.Show();
         }
         catch (Exception ex)
         {
@@ -33,6 +44,7 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
+        _host.Dispose();
         base.OnExit(e);
     }
 }

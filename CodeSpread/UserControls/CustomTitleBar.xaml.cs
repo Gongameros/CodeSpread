@@ -13,8 +13,8 @@ public partial class CustomTitleBar : UserControl
 
     public CustomTitleBar()
     {
-        MainWindowAlias = Application.Current.MainWindow;
         InitializeComponent();
+        MainWindowAlias = Application.Current.MainWindow;
     }
 
     private void MinimizeWindow_Click(object sender, RoutedEventArgs e)

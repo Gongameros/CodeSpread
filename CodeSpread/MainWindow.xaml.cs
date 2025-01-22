@@ -16,7 +16,7 @@ namespace CodeSpread;
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
     private const double MinWidth = 700;
-    private const double MinHeight = 600;
+    private const double MinHeight = 1200;
     private bool _isResizing = false;
     private Point _startPoint;
     private ResizeDirection _resizeDirection;
@@ -41,12 +41,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     public MainWindow()
     {
+        InitializeComponent();
+    }
+
+    public MainWindow(StartupView startupView)
+    {
+        InitializeComponent();
         DataContext = this;
         //// Set initial view to StartupView
-        CurrentView = new StartupView();
-
-        InitializeComponent();
-
+        CurrentView = startupView;
     }
 
     // Method to handle file selection (triggered on file selection in StartupView)
