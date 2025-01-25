@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
-using System.Windows;
-using CodeSpread.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
-using CodeSpread.Views;
-using System.Runtime.InteropServices.JavaScript;
+using System.Windows;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace CodeSpread;
 
@@ -14,12 +13,20 @@ namespace CodeSpread;
 public partial class App : Application
 {
     private readonly IHost _host;
+    public IConfiguration Configuration { get; private set; }
 
     public App()
     {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+        Configuration = builder.Build();
+
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                services.AddConfiguration(Configuration);
                 services.AddCodeSpread();
             })
             .Build();

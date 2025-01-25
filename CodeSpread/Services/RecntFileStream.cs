@@ -1,18 +1,28 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using System.Windows;
-using CodeSpread.Base;
+using Microsoft.Extensions.Configuration;
 
 namespace CodeSpread.Services;
 
 public class RecentFileStream
 {
-    private const string _filePath = "RecentFiles.json";
-    public RecentFileStream()
-    {
+    private readonly string _filePath = "TestRecentFile.json";
 
+    public RecentFileStream(IConfiguration configuration)
+    {
         try
         {
+
+            // Read FilePath from the configuration
+            string? filePath = configuration["AppSettings:RecentFilesPath"];
+
+            // Check if filepath exists in configuration
+            if (!String.IsNullOrWhiteSpace(filePath))
+            {
+                _filePath = filePath;
+            }
+
             // Ensure the directory exists
             var directory = Path.GetDirectoryName(_filePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
@@ -24,8 +34,6 @@ public class RecentFileStream
         {
             throw new Exception("ERROR ctor(): Creating RecentFileStream");
         }
-
-
     }
 
     /// <summary>
