@@ -19,11 +19,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <!-- Main View -->
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <controls:CustomTitleBar Grid.Row="0"/>
-                <controls:NavbarMenu Grid.Row="1"/>
+                <ContentControl Grid.Row="1" Content="{Binding NavbarMenuComponent}"/>
                 <ContentControl Grid.Row="2" Content="{Binding CurrentView}" />
             </Grid>
         </Border>

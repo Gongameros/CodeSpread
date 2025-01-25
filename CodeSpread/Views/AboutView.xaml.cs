@@ -1,5 +1,6 @@
 ﻿using CodeSpread.Base;
 using CodeSpread.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,12 +13,14 @@ namespace CodeSpread.Views
     public partial class AboutView : UserControl
     {
         private readonly AboutViewModel _aboutViewModel;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AboutView()
+        public AboutView(AboutViewModel aboutViewModel, IServiceProvider serviceProvider)
         {
             InitializeComponent();
 
-            _aboutViewModel = new AboutViewModel();
+            _aboutViewModel = aboutViewModel;
+            _serviceProvider = serviceProvider;
 
             this.DataContext = _aboutViewModel;
         }
@@ -27,7 +30,8 @@ namespace CodeSpread.Views
             // Navigate back to the Main Menu
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
-                mainWindow.CurrentView = new StartupView();
+                StartupView startupView = _serviceProvider.GetRequiredService<StartupView>();
+                mainWindow.CurrentView = startupView;
             }
         }
     }

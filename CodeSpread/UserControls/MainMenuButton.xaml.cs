@@ -14,7 +14,6 @@ namespace CodeSpread.UserControls
             InitializeComponent();
         }
 
-        
         public string IconSource 
         {
             get { return (string)GetValue(IconSourceProperty); }

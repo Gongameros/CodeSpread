@@ -6,23 +6,25 @@ using CodeSpread.Decompiler;
 using CodeSpread.Decompiler.Models;
 using CodeSpread.Services;
 using CodeSpread.Views;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 
 namespace CodeSpread.ViewModels;
 
 public class StartupViewModel
 {
-    private readonly AboutView _aboutView;
+    private readonly IServiceProvider _serviceProvider;
     private readonly RecentFileStream _recentFileStream;
+
     public ObservableCollection<string> RecentFiles { get; }
     public ICommand OpenFileCommand { get; }
     public ICommand AboutCommand { get; }
     public ICommand OpenRecentFileCommand { get; }
 
-    public StartupViewModel()
+    public StartupViewModel(RecentFileStream recentFileStream, IServiceProvider serviceProvider)
     {
-        _aboutView = new AboutView();
-        _recentFileStream = new RecentFileStream();
+        _serviceProvider = serviceProvider;
+        _recentFileStream = recentFileStream;
 
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
@@ -100,7 +102,7 @@ public class StartupViewModel
         try
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.CurrentView = _aboutView;
+            mainWindow.CurrentView = _serviceProvider.GetRequiredService<AboutView>();
         }
         catch (Exception ex)
         {

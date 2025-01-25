@@ -35,7 +35,7 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Width="300" 
-                    Height="70">
+                    Height="85">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
                     <!-- Image on the left -->
                     <Image Source="{Binding IconSource, RelativeSource={RelativeSource AncestorType=UserControl}}"

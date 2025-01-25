@@ -5,6 +5,7 @@ using CodeSpread.Views;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeSpread.UserControls;
 
@@ -13,12 +14,14 @@ namespace CodeSpread.UserControls;
 /// </summary>
 public partial class NavbarMenu : UserControl
 {
+    private readonly IServiceProvider _serviceProvider;
     private readonly RecentFileStream _recentFileStream;
 
-    public NavbarMenu()
+    public NavbarMenu(RecentFileStream recentFileStream, IServiceProvider serviceProvider)
     {
         InitializeComponent();
-        _recentFileStream = new RecentFileStream();
+        _recentFileStream = recentFileStream;
+        _serviceProvider = serviceProvider;
     }
 
     private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -58,9 +61,11 @@ public partial class NavbarMenu : UserControl
     private void NavigateToAbout_Click(object sender, RoutedEventArgs e)
     {
         MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-        mainWindow.CurrentView = new AboutView();
+        mainWindow.CurrentView = _serviceProvider.GetRequiredService<AboutView>();
     }
 
+
+    // TO DO
     private void NavigateToDecompile_Click(object sender, RoutedEventArgs e)
     {
         // Navigate to the Decompile view.

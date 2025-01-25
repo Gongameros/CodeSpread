@@ -11,12 +11,11 @@ public partial class StartupView : UserControl
 {
     private readonly StartupViewModel _viewModel;
 
-
-    public StartupView()
+    public StartupView(StartupViewModel viewModel)
     {
         InitializeComponent();
 
-        _viewModel = new StartupViewModel();
+        _viewModel = viewModel;
         DataContext = _viewModel;
     }
 }

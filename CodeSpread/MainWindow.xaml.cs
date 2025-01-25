@@ -1,5 +1,6 @@
 ﻿using CodeSpread.Base;
 using CodeSpread.Decompiler.Models;
+using CodeSpread.UserControls;
 using CodeSpread.Utils;
 using CodeSpread.Views;
 using System.ComponentModel;
@@ -15,11 +16,29 @@ namespace CodeSpread;
 /// </summary>
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    // Screen Resolution minimals
     private const double MinWidth = 700;
     private const double MinHeight = 1200;
+
+
     private bool _isResizing = false;
     private Point _startPoint;
     private ResizeDirection _resizeDirection;
+
+
+    private object _navbarMenuComponent;
+    public object NavbarMenuComponent
+    {
+        get { return _navbarMenuComponent; }
+        set
+        {
+            if (_navbarMenuComponent != value)
+            {
+                _navbarMenuComponent = value;
+                OnPropertyChanged(nameof(NavbarMenuComponent)); // Notify the UI of the change
+            }
+        }
+    }
 
     private object _currentView { get; set; }
     public object CurrentView
@@ -35,19 +54,18 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
 
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
-
-    public MainWindow(StartupView startupView)
+    public MainWindow(StartupView startupView, NavbarMenu navbarMenu)
     {
         InitializeComponent();
         DataContext = this;
+
+
+        NavbarMenuComponent = navbarMenu;
         //// Set initial view to StartupView
         CurrentView = startupView;
     }
