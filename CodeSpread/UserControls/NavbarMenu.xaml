@@ -10,13 +10,14 @@
         <Menu Background="#222222" HorizontalAlignment="Left" Height="25" Width="Auto" Margin="19,0,0,0" FontSize="15">
             <!-- File Menu -->
             <MenuItem Header="File" Background="#222222" Foreground="White">
-                <MenuItem Header="Open File" Background="#333333" Foreground="White" Click="OpenFile_Click"/>
+               <!-- <MenuItem Header="Open File" Background="#333333" Foreground="White" Click="OpenFile_Click"/> -->
+                <MenuItem Header="Open File" Background="#333333" Foreground="White"/>
             </MenuItem>
 
             <!-- Navigation Menu -->
             <MenuItem Header="Navigation" Background="#222222" Foreground="White">
-                <MenuItem Header="About" Background="#333333" Foreground="White" Click="NavigateToAbout_Click"/>
-                <MenuItem Header="Decompile" Background="#333333" Foreground="White" Click="NavigateToDecompile_Click"/>
+                <MenuItem Command="{Binding NavigateAboutCommand}" Header="About" Background="#333333" Foreground="White" />
+                <MenuItem Command="{Binding NavigateStartupCommand}" Header="Startup" Background="#333333" Foreground="White" />
             </MenuItem>
         </Menu>
     </Grid>

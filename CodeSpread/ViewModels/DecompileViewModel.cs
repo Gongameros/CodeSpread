@@ -1,12 +1,18 @@
-﻿using System.Collections.ObjectModel;
+﻿using CodeSpread.Decompiler;
 using CodeSpread.Decompiler.Models;
+using CodeSpread.Stores;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.IO;
 
 namespace CodeSpread.ViewModels;
 
-public class DecompileViewModel : INotifyPropertyChanged
+public class DecompileViewModel : ViewModelBase, INotifyPropertyChanged
 {
+    private readonly SelectedFileStore _selectedFileStore;
+
     private string _selectedCode;
     public ObservableCollection<AssemblyModule> AssemblyModules { get; set; } = new ObservableCollection<AssemblyModule>();
 
@@ -20,11 +26,34 @@ public class DecompileViewModel : INotifyPropertyChanged
         }
     }
 
-    public DecompileViewModel(AssemblyInformation decompiledAssembly)
+    public DecompileViewModel(SelectedFileStore selectedFileStore)
     {
-        foreach (var module in decompiledAssembly.AssemblyModules)
+        _selectedFileStore = selectedFileStore;
+
+        try
         {
-            AssemblyModules.Add(module);
+            if (File.Exists(_selectedFileStore.SelectedFile))
+            {
+                AssemblyInformation decompiledAssembly = FileDecompiler.DecompileAssembly(_selectedFileStore.SelectedFile);
+                foreach (var module in decompiledAssembly.AssemblyModules)
+                {
+                    AssemblyModules.Add(module);
+                }
+            }
+            else
+            {
+                MessageBox.Show($"No file path specified in selected file store",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Decompiling assembly error: {ex.Message}",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
     }
 
@@ -33,5 +62,11 @@ public class DecompileViewModel : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public override void Dispose()
+    {
+        _selectedFileStore.ClearSelectedFile();
+        base.Dispose();
     }
 }

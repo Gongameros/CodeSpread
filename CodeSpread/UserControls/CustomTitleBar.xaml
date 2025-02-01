@@ -8,10 +8,10 @@
     <UserControl.Resources>
         <FontFamily x:Key="RyeFont">pack://application:,,,/Fonts/Rye.ttf#Rye</FontFamily>
     </UserControl.Resources>
-    <Border Padding="13">
-        <Grid x:Name="ToolBarMainGrid" MaxHeight="30" 
+    <Border Padding="0,0,0,10">
+        <Grid x:Name="ToolBarMainGrid"
               Background="#222222" HorizontalAlignment="Stretch"
-              VerticalAlignment="Top" MouseDown="ToolBar_MouseDown">
+              VerticalAlignment="Top" MouseDown="ToolBar_MouseDown" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <!-- Auto-expand for the title -->
@@ -19,8 +19,8 @@
                 <!-- Auto-size for the buttons -->
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="10,0" 
-                       Foreground="White" FontSize="18" MaxHeight="30"
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="25,0,0,0" 
+                       Foreground="White" FontSize="18" MaxHeight="40" Padding="0,15,0,0"
                        FontFamily="{StaticResource RyeFont}">
                 CodeSpread
             </TextBlock>
