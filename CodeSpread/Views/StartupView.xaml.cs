@@ -9,13 +9,8 @@ namespace CodeSpread.Views;
 /// </summary>
 public partial class StartupView : UserControl
 {
-    private readonly StartupViewModel _viewModel;
-
-    public StartupView(StartupViewModel viewModel)
+    public StartupView()
     {
         InitializeComponent();
-
-        _viewModel = viewModel;
-        DataContext = _viewModel;
     }
 }

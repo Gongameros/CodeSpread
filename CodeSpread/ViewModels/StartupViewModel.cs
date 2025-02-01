@@ -2,47 +2,36 @@
 using System.Windows;
 using System.Windows.Input;
 using CodeSpread.Base;
-using CodeSpread.Decompiler;
-using CodeSpread.Decompiler.Models;
+using CodeSpread.Commands;
 using CodeSpread.Services;
-using CodeSpread.Views;
-using Microsoft.Extensions.DependencyInjection;
+using CodeSpread.Stores;
 using Microsoft.Win32;
 
 namespace CodeSpread.ViewModels;
 
-public class StartupViewModel
+public class StartupViewModel : ViewModelBase
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly RecentFileStream _recentFileStream;
+    private readonly SelectedFileStore _selectedFileStore;
+    private readonly INavigationService _decompileNavigationService;
 
     public ObservableCollection<string> RecentFiles { get; }
     public ICommand OpenFileCommand { get; }
     public ICommand AboutCommand { get; }
     public ICommand OpenRecentFileCommand { get; }
 
-    public StartupViewModel(RecentFileStream recentFileStream, IServiceProvider serviceProvider)
+    public StartupViewModel(RecentFileStream recentFileStream, SelectedFileStore selectedFileStore,
+        INavigationService aboutNavigationService, INavigationService decompileNavigationService)
     {
-        _serviceProvider = serviceProvider;
         _recentFileStream = recentFileStream;
+        _selectedFileStore = selectedFileStore;
+        _decompileNavigationService = decompileNavigationService;
 
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
         OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
-        AboutCommand = new RelayCommand(OpenAboutView);
+        AboutCommand = new NavigateCommand(aboutNavigationService);
 
-    }
-
-    public void AddFile(string filePath)
-    {
-        _recentFileStream.AddRecentFile(filePath);
-
-        // Clear and reload the ObservableCollection
-        RecentFiles.Clear();
-        foreach (var file in _recentFileStream.LoadRecentFiles())
-        {
-            RecentFiles.Add(file);
-        }
     }
 
     private void OpenFile()
@@ -60,14 +49,10 @@ public class StartupViewModel
 
             try
             {
-                // Save the file path into RecentFileStream
                 _recentFileStream.AddRecentFile(filePath);
+                _selectedFileStore.SelectedFile = filePath;
 
-                // Decompiling the file 
-                AssemblyInformation assemblyInformation = FileDecompiler.DecompileAssembly(filePath);
-                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                mainWindow.OnFileSelected(assemblyInformation);
-                
+                _decompileNavigationService.Navigate();
             }
             catch (Exception ex)
             {
@@ -83,30 +68,13 @@ public class StartupViewModel
     {
         try
         {
-            // Decompiling the recent file
-            AssemblyInformation assemblyInformation = FileDecompiler.DecompileAssembly(filePath);
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.OnFileSelected(assemblyInformation);
+            _selectedFileStore.SelectedFile = filePath;
+
+            _decompileNavigationService.Navigate();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Failed to open recent file: {ex.Message}",
-                            "Error",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error);
-        }
-    }
-
-    private void OpenAboutView()
-    {
-        try
-        {
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.CurrentView = _serviceProvider.GetRequiredService<AboutView>();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Failed to open about view: {ex.Message}",
                             "Error",
                             MessageBoxButton.OK,
                             MessageBoxImage.Error);

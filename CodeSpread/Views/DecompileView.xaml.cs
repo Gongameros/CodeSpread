@@ -10,19 +10,19 @@ namespace CodeSpread.Views;
 /// </summary>
 public partial class DecompileView : UserControl
 {
-    private readonly DecompileViewModel _viewModel;
+    private DecompileViewModel _decompileViewModel;
 
-    public DecompileView(AssemblyInformation assemblyInformation)
+    public DecompileView()
     {
         InitializeComponent();
-
-        _viewModel = new DecompileViewModel(assemblyInformation);
-        DataContext = _viewModel;
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        foreach(var module in _viewModel.AssemblyModules)
+        // TEMP
+        _decompileViewModel = (DecompileViewModel) this.DataContext;
+
+        foreach (var module in _decompileViewModel.AssemblyModules)
         {
             var moduleTreeItem = new TreeViewItem
             {
@@ -85,7 +85,7 @@ public partial class DecompileView : UserControl
     {
         if (sender is TreeViewItem treeViewItem && treeViewItem.Tag is DecompiledType decompiledType)
         {
-            _viewModel.SelectedCode = decompiledType.DecompiledCode;
+            _decompileViewModel.SelectedCode = decompiledType.DecompiledCode;
         }
     }
 

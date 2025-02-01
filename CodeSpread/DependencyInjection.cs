@@ -1,9 +1,9 @@
-﻿using CodeSpread.Views;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using CodeSpread.ViewModels;
 using CodeSpread.Services;
-using CodeSpread.UserControls;
 using Microsoft.Extensions.Configuration;
+using CodeSpread.Stores;
+using CodeSpread.Utils;
 
 namespace CodeSpread;
 
@@ -11,13 +11,40 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddCodeSpread(this IServiceCollection services)
     {
-        services.AddSingleton<MainWindow>();
-        services.AddSingleton<AboutView>();
-        services.AddSingleton<AboutViewModel>();
-        services.AddSingleton<RecentFileStream>();
-        services.AddSingleton<NavbarMenu>();
-        services.AddTransient<StartupView>();
-        services.AddTransient<StartupViewModel>();
+        services.AddSingleton<NavigationStore>();
+        services.AddSingleton<SelectedFileStore>();
+
+        // Setting Default View
+        services.AddSingleton<INavigationService>(s => NavigationUtility.CreateStartupNavigationService(s));
+
+        // Added Stream for reading recent files
+        services.AddTransient<RecentFileStream>();
+
+        // Add StartupViewModel
+        services.AddTransient<StartupViewModel>(s =>
+            new StartupViewModel(s.GetRequiredService<RecentFileStream>(),
+            s.GetRequiredService<SelectedFileStore>(),
+            NavigationUtility.CreateAboutNavigationService(s),
+            NavigationUtility.CreateDecompileNavigationService(s)));
+
+        // Add AboutViewModel
+        services.AddTransient<AboutViewModel>(s =>
+            new AboutViewModel(NavigationUtility.CreateStartupNavigationService(s)));
+
+        // Add DecompileViewModel
+        services.AddTransient<DecompileViewModel>(s =>
+            new DecompileViewModel(s.GetRequiredService<SelectedFileStore>()));
+
+        // Add NavBarModel
+        services.AddTransient<NavigationBarViewModel>(NavigationUtility.CreateNavigationBarViewModel);
+
+        // Add MainWindow and MainViewModel
+        services.AddSingleton<MainViewModel>();
+        services.AddSingleton<MainWindow>(s => new MainWindow()
+        {
+            DataContext = s.GetRequiredService<MainViewModel>()
+        });
+
 
         return services;
     }

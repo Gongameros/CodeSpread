@@ -15,8 +15,11 @@
                        HorizontalAlignment="Left" VerticalAlignment="Top"
                        Margin="10"
                        Cursor="Hand"
-                       ToolTip="Return to Main Menu"
-                       MouseLeftButtonUp="ReturnBackIcon_Click" />
+                       ToolTip="Return to Main Menu">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding NavigateStartupCommand}" />
+                    </Image.InputBindings>
+                </Image>
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <!-- Project Title -->

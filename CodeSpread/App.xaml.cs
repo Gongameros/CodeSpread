@@ -4,6 +4,10 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using CodeSpread.Services;
+using System;
+using CodeSpread.ViewModels;
+using CodeSpread.Stores;
 
 namespace CodeSpread;
 
@@ -36,10 +40,14 @@ public partial class App : Application
     {
         try
         {
-            base.OnStartup(e);
+
+            INavigationService initialNavigationService = _host.Services.GetRequiredService<INavigationService>();
+            initialNavigationService.Navigate();
 
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
+
+            base.OnStartup(e);
         }
         catch (Exception ex)
         {
