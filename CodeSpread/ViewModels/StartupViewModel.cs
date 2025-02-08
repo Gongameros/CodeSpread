@@ -17,11 +17,14 @@ public class StartupViewModel : ViewModelBase
 
     public ObservableCollection<string> RecentFiles { get; }
     public ICommand OpenFileCommand { get; }
-    public ICommand AboutCommand { get; }
+    public ICommand AboutNavigationCommand { get; }
+    public ICommand SettingsNavigationCommand { get; }
     public ICommand OpenRecentFileCommand { get; }
 
     public StartupViewModel(RecentFileStream recentFileStream, SelectedFileStore selectedFileStore,
-        INavigationService aboutNavigationService, INavigationService decompileNavigationService)
+        INavigationService aboutNavigationService,
+        INavigationService decompileNavigationService,
+        INavigationService settingsNavigationService)
     {
         _recentFileStream = recentFileStream;
         _selectedFileStore = selectedFileStore;
@@ -30,7 +33,8 @@ public class StartupViewModel : ViewModelBase
         RecentFiles = new ObservableCollection<string>(_recentFileStream.LoadRecentFiles());
         OpenFileCommand = new RelayCommand(OpenFile);
         OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
-        AboutCommand = new NavigateCommand(aboutNavigationService);
+        AboutNavigationCommand = new NavigateCommand(aboutNavigationService);
+        SettingsNavigationCommand = new NavigateCommand(settingsNavigationService);
 
     }
 

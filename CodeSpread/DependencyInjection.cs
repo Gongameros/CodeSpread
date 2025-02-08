@@ -25,7 +25,8 @@ public static class DependencyInjection
             new StartupViewModel(s.GetRequiredService<RecentFileStream>(),
             s.GetRequiredService<SelectedFileStore>(),
             NavigationUtility.CreateAboutNavigationService(s),
-            NavigationUtility.CreateDecompileNavigationService(s)));
+            NavigationUtility.CreateDecompileNavigationService(s),
+            NavigationUtility.CreateSettingsNavigationService(s)));
 
         // Add AboutViewModel
         services.AddTransient<AboutViewModel>(s =>
@@ -34,6 +35,10 @@ public static class DependencyInjection
         // Add DecompileViewModel
         services.AddTransient<DecompileViewModel>(s =>
             new DecompileViewModel(s.GetRequiredService<SelectedFileStore>()));
+
+        // Add SettingsViewModel
+        services.AddTransient<SettingsViewModel>(s =>
+            new SettingsViewModel(NavigationUtility.CreateSettingsNavigationService(s)));
 
         // Add NavBarModel
         services.AddTransient<NavigationBarViewModel>(NavigationUtility.CreateNavigationBarViewModel);

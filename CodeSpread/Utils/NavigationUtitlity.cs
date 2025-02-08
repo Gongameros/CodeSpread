@@ -21,11 +21,17 @@ public static class NavigationUtility
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
     }
 
-    // REWRITE
     public static INavigationService CreateDecompileNavigationService(IServiceProvider serviceProvider)
     {
         return new LayoutNavigationService<DecompileViewModel>(serviceProvider.GetRequiredService<NavigationStore>(),
                 () => serviceProvider.GetRequiredService<DecompileViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
+    }
+
+    public static INavigationService CreateSettingsNavigationService(IServiceProvider serviceProvider)
+    {
+        return new LayoutNavigationService<SettingsViewModel>(serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<SettingsViewModel>(),
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
     }
 
@@ -34,6 +40,7 @@ public static class NavigationUtility
         return new NavigationBarViewModel(
             serviceProvider.GetRequiredService<RecentFileStream>(),
             CreateAboutNavigationService(serviceProvider),
-            CreateStartupNavigationService(serviceProvider));
+            CreateStartupNavigationService(serviceProvider),
+            CreateSettingsNavigationService(serviceProvider));
     }
 }

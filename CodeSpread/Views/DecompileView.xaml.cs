@@ -88,8 +88,4 @@ public partial class DecompileView : UserControl
             _decompileViewModel.SelectedCode = decompiledType.DecompiledCode;
         }
     }
-
-    private void ModuleExpanded(object sender, RoutedEventArgs e)
-    {
-    }
 }
