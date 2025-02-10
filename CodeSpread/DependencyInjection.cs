@@ -13,6 +13,7 @@ public static class DependencyInjection
     {
         services.AddSingleton<NavigationStore>();
         services.AddSingleton<SelectedFileStore>();
+        services.AddSingleton<SettingsStore>();
 
         // Setting Default View
         services.AddSingleton<INavigationService>(s => NavigationUtility.CreateStartupNavigationService(s));
@@ -38,7 +39,8 @@ public static class DependencyInjection
 
         // Add SettingsViewModel
         services.AddTransient<SettingsViewModel>(s =>
-            new SettingsViewModel(NavigationUtility.CreateSettingsNavigationService(s)));
+            new SettingsViewModel(NavigationUtility.CreateStartupNavigationService(s),
+                s.GetRequiredService<SettingsStore>()));
 
         // Add NavBarModel
         services.AddTransient<NavigationBarViewModel>(NavigationUtility.CreateNavigationBarViewModel);

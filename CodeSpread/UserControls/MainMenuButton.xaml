@@ -10,8 +10,8 @@
                 Background="Transparent"
                 BorderThickness="0"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#333333" 
-                    BorderBrush="#222222" 
+            <Border Background="{DynamicResource BackgroundAdditional}" 
+                    BorderBrush="{DynamicResource Background}" 
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Width="300" 
@@ -23,11 +23,13 @@
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <!-- Main text (title) -->
                         <TextBlock Text="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                   Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" Margin="0,0,0,5"/>
+                                   Foreground="{DynamicResource Text}" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                   FontSize="16" Margin="0,0,0,5"/>
 
                         <!-- Subtext (description) -->
                         <TextBlock Text="{Binding SubText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                   Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="0,0,0,5"/>
+                                   Foreground="{DynamicResource Text}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   FontSize="12" Margin="0,0,0,5"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

@@ -16,7 +16,7 @@
             </Grid.ColumnDefinitions>
 
         <!-- TreeView for Assembly Structure -->
-        <TreeView Grid.Column="0" x:Name="AssemblyTreeView" Background="#222222">
+        <TreeView Grid.Column="0" x:Name="AssemblyTreeView" Background="{DynamicResource Background}">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="HeaderTemplate">
@@ -28,14 +28,14 @@
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Foreground" Value="{DynamicResource Text}" />
                 </Style>
             </TreeView.Resources>
         </TreeView>
 
             <!-- Code Editor -->
-        <TextBox Background="#222222"
-                 Foreground="White"
+        <TextBox Background="{DynamicResource Background}"
+                 Foreground="{DynamicResource Text}"
                  Grid.Column="1" 
                  Text="{Binding SelectedCode, UpdateSourceTrigger=PropertyChanged}" 
                  VerticalScrollBarVisibility="Auto" 
