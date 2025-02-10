@@ -8,6 +8,7 @@ using CodeSpread.Services;
 using System;
 using CodeSpread.ViewModels;
 using CodeSpread.Stores;
+using CodeSpread.Utils;
 
 namespace CodeSpread;
 
@@ -40,6 +41,8 @@ public partial class App : Application
     {
         try
         {
+            // Applying default configuration from Properties
+            ConfigurationStartup.ApplyDefaultConfiguration(_host.Services);
 
             INavigationService initialNavigationService = _host.Services.GetRequiredService<INavigationService>();
             initialNavigationService.Navigate();

@@ -15,15 +15,16 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,0,0,100" VerticalAlignment="Center">
-            <TextBlock Text="Open Recent" Foreground="White" FontSize="18" Margin="5" />
-            <Border Background="#222222" BorderBrush="#444444" BorderThickness="1" 
+            <TextBlock Text="Open Recent" Foreground="{DynamicResource Text}" FontSize="18" Margin="5" />
+            <Border Background="{DynamicResource Background}" BorderBrush="{DynamicResource Border}" 
+                    BorderThickness="1" 
                     Margin="5,10,10,10" HorizontalAlignment="Left">
-                <ListBox ItemsSource="{Binding RecentFiles}" Background="#333333" Foreground="White"
+                <ListBox ItemsSource="{Binding RecentFiles}" Background="{DynamicResource BackgroundAdditional}"
+                         Foreground="{DynamicResource Text}"
             BorderThickness="0" MaxHeight="300" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="#444444" BorderThickness="0,0,0,1" Padding="5">
-                                <!-- <TextBlock Text="{Binding}" TextWrapping="Wrap" /> -->
+                            <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1" Padding="5">
                                 <TextBlock Text="{Binding}" TextWrapping="Wrap">
                                     <TextBlock.InputBindings>
                                         <!-- Bind the OpenRecentFileCommand to the mouse click event -->
@@ -41,7 +42,7 @@
 
         <!-- Buttons Column -->
         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100" >
-            <TextBlock Text="Get Started" Foreground="White" FontSize="18" Margin="5" />
+            <TextBlock Text="Get Started" Foreground="{DynamicResource Text}" FontSize="18" Margin="5" />
             <controls:MainMenuButton
                 Command="{Binding OpenFileCommand}"
                 ButtonText="Open File"

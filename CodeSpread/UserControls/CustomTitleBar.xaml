@@ -10,7 +10,7 @@
     </UserControl.Resources>
     <Border Padding="0,0,0,10">
         <Grid x:Name="ToolBarMainGrid"
-              Background="#222222" HorizontalAlignment="Stretch"
+              Background="{DynamicResource Background}" HorizontalAlignment="Stretch"
               VerticalAlignment="Top" MouseDown="ToolBar_MouseDown" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -20,16 +20,16 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="25,0,0,0" 
-                       Foreground="White" FontSize="18" MaxHeight="40" Padding="0,15,0,0"
+                       Foreground="{DynamicResource Text}" FontSize="18" MaxHeight="40" Padding="0,15,0,0"
                        FontFamily="{StaticResource RyeFont}">
                 CodeSpread
             </TextBlock>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Width="40" Height="30" Content="—" Background="Transparent" Foreground="White" 
+                <Button Width="40" Height="30" Content="—" Background="Transparent" Foreground="{DynamicResource Text}" 
                         BorderThickness="0" Click="MinimizeWindow_Click"/>
-                <Button Width="40" Height="30" Content="❐" Background="Transparent" Foreground="White"
+                <Button Width="40" Height="30" Content="❐" Background="Transparent" Foreground="{DynamicResource Text}"
                         BorderThickness="0" Click="MaximizeWindow_Click"/>
-                <Button Width="40" Height="30" Content="✖" Background="Transparent" Foreground="White"
+                <Button Width="40" Height="30" Content="✖" Background="Transparent" Foreground="{DynamicResource Text}"
                         BorderThickness="0" Click="CloseWindow_Click"/>
             </StackPanel>
         </Grid>

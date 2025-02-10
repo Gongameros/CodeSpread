@@ -1,10 +1,11 @@
 ﻿using CodeSpread.Stores;
+using System.Windows;
 
 namespace CodeSpread.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private NavigationStore _navigationStore;
+    private readonly NavigationStore _navigationStore;
 
     public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 

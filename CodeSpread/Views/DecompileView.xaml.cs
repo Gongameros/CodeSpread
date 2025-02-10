@@ -30,7 +30,7 @@ public partial class DecompileView : UserControl
                 Tag = module
             };
 
-            moduleTreeItem.Expanded += ModuleExpanded;
+            //moduleTreeItem.Expanded += ModuleExpanded;
 
             foreach (DecompiledType type in module.DecompiledTypes)
             {

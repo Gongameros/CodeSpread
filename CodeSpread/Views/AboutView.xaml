@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:CodeSpread.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#222222" >
-        <Border Background="#222222" CornerRadius="10" Padding="20" BorderBrush="#444444">
+    <Grid Background="{DynamicResource Background}" >
+        <Border Background="{DynamicResource Background}" CornerRadius="10" Padding="20"
+                BorderBrush="{DynamicResource BackgroundAdditional}">
             <Grid>
                 <!-- Return Icon -->
                 <Image Source="/Assets/return-back-icon.png"
@@ -23,16 +24,18 @@
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <!-- Project Title -->
-                    <TextBlock Text="CodeSpread" FontSize="36" FontWeight="Bold" Foreground="White" TextAlignment="Center" Margin="10" />
+                    <TextBlock Text="CodeSpread" FontSize="36" FontWeight="Bold" 
+                               Foreground="{DynamicResource Text}" TextAlignment="Center" Margin="10" />
 
                     <!-- Description -->
                     <TextBlock Margin="10,0,10,0" Text="CodeSpread is an advanced .NET decompiler designed to help developers understand and debug .NET applications. This tool provides a clear view of the structure and logic of compiled .NET assemblies." 
-                               FontSize="16" Foreground="#DDDDDD" TextAlignment="Center" TextWrapping="Wrap" />
+                               FontSize="16" Foreground="{DynamicResource SubText}" TextAlignment="Center" TextWrapping="Wrap" />
 
                     <!-- Creator Info -->
-                    <TextBlock Text="Created by Markiian Hoinets" FontSize="18" FontWeight="Bold" Foreground="White" Margin="15" TextAlignment="Center" />
+                    <TextBlock Text="Created by Markiian Hoinets" FontSize="18" FontWeight="Bold"
+                               Foreground="{DynamicResource Text}" Margin="15" TextAlignment="Center" />
                     <TextBlock Margin="10,0,10,0" Text="CodeSpread is an open-source project aimed at empowering developers by making decompilation easier and more accessible." 
-                               FontSize="16" Foreground="#DDDDDD" TextAlignment="Center" TextWrapping="Wrap" />
+                               FontSize="16" Foreground="{DynamicResource SubText}" TextAlignment="Center" TextWrapping="Wrap" />
 
                     <!-- Links -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,25">
